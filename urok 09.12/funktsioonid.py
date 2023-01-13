@@ -1,4 +1,5 @@
 from math import*
+from datetime import date, datetime
 #1
 def arithmetic(a1:int,sym:str,a2:int):
     """Lihtne kalkulator
@@ -24,12 +25,14 @@ def is_year_leap(year:int)->bool:
     :param int year: Aasta number
     :rtype: bool Funktsiooi vastus loogilises formadis
     """
-    year=int(year)
-    if year%4==0:
-        t=True
+    if year==int(year) and year>0:
+        if year%4==0:
+            t=True
+        else:
+            t=False
+        return t
     else:
-        t=False
-    return t
+        print("Aasta peab olema täisarv ja positiivne arv")
 
 #3
 def ruud(a:float)->float:
@@ -40,10 +43,13 @@ def ruud(a:float)->float:
     :rtype: float ruudu pindala
     :rtype: float ruudu diagonaal
     """
-    P=a*4
-    S=a**2
-    d=a*sqrt(2)
-    return P,S,d
+    if a>=0:
+        P=a*4
+        S=a**2
+        d=a*sqrt(2)
+        return P,S,d
+    else:
+        print("Ruudu külg ei saa olla negatiivne")
 
 #4
 def season(kuu:int)->str:
@@ -72,8 +78,14 @@ def bank(a:float,years:int)->float:
     :param years int: kestus
     :rtype: float Rahasumma
     """
-    S=a*(1+0.1)**years 
-    return S
+    if a==float(a):
+        if years==int(years):
+            S=a*(1+0.1)**years 
+            return S
+        else:
+            print("Tähtaeg ainult terved aastad")
+    else:
+        print("Summa viga")
 
 #6
 def is_prime(a:float)->bool:
@@ -82,19 +94,35 @@ def is_prime(a:float)->bool:
     :param a float: arv 0 kuni 1000
     :rtype: bool Funktsiooni vastus loogilises formadis 
     """
-    if a <= 2:
-        vas=False
-    for i in range(2, int(a ** 0.5) + 1):
-        if a % i == 0:
-            vas=True
-    return vas
+    if a in range(0,1001):
+        if a < 2:
+            return False
+        for i in range(2, int(a ** 0.5) + 1):
+            if a % i == 0:
+                return False
+        return True
+    else:
+        print("Arv ei ole vahemikus")
 
+#7
+def date(d:int,m:int,y:int)->bool:
+    """
+    Õige kuupäev
+    :param d int: päev
+    :param m int: kuu
+    :paran y int: aasta
+    :rtype: bool Funktsiooni vastus loogilises formadis 
+    """
+    try:
+        datetime(y,m,d)
+        return True
+    except ValueError:
+        return False
 
-    #if a in range(0,1001):
-    #    if a%a==1 and a/1==a:
-    ##        vas=True
-    ##    else:
-    ##        vas=False
-    ##else:
-    ##    vas="lahjem kui 0 või surem kui 1000"
-    ##return vas
+#8
+def XOR_cipher(string, key):
+    return ''.join([chr(ord(c)^key) for c in string])
+
+def XOR_uncipher(string, key):
+    return XOR_cipher(string, key)
+    
